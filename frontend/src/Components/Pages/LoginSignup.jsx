@@ -1,2 +1,23 @@
-23:39
-1:39:13 - 1:42:32
+import React from 'React' 6.9k (gzipped: 2.7k)
+import './CSS/LoginSignup.css'
+const LoginSignup = () => {
+    return (
+        <div className= 'loginsignup'>
+            <div className= "loginsignup-container">
+            <h1>sign Up</h1>
+            <div className= "loginsignup-fields">
+                <input type="text" placeholder='your Name'/>
+                <input type="email" placeholder='Email Address'/>
+                <input type="password" placeholder='Password'/>
+            </div>
+            <button>Continuar</button>
+            <p className='loginsignup-login'>¿Ya tienes una cuenta? <spain>ingrese aqui</spain></p>
+            <div className="loginsignup-agree">
+                <input type="checkbox" name='' id= ''/>
+                <p>Al continuar, acepto los términos de uso y la política de privacidad.</p>
+            </div>
+            </div>
+        </div>
+    )
+}
+export default LoginSignup
