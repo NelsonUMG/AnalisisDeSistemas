@@ -1,6 +1,20 @@
-23:20
-34:14 - 34:27
-51:39 - 51:45
-55:18 - 55:23
-1:03:39 - 1:03:59
-1:11:56 - 1:12:05
+import React from 'react'
+import Hero from '../Components/Hero/Hero'
+import Popular from '../Components/Popular/Popular'
+import Offers from '../Components/Offers/Offers'
+import NewCollections from '../Components/NewCollections/NewCollections'
+import NewsLetter from '../Components/NewsLetter/NewsLetter'
+
+const Shop = () => {
+  return (
+    <div>
+      <Hero/>
+      <Popular/>
+      <Offers/>
+      <NewCollections/>
+      <NewsLetter/>
+    </div>
+  )
+}
+
+export default Shop
