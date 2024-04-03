@@ -1,6 +1,7 @@
-import React from 'react' 6.9k (gzipped: 2.7k)
+import React from 'react'
 import './NewCollections.css'
 import new_collection from '../Assets/new_collections'
+import Item from '../Item/Item'; // Importa el componente Item si existe
 
 const NewCollections = () => {
     return (

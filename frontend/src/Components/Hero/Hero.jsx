@@ -1,4 +1,4 @@
-import React from 'React' 6.9k (gzipped: 2.7k)
+import React from 'react'
 import './Hero.css'
 import hand_icon from '../Assets/hand_icon.png'
 import arrow_icon from '../Assets/arrow.png'

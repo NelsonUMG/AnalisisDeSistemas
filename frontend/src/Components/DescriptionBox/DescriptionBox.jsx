@@ -1,12 +1,12 @@
-import React from 'React' 6.9k (gzipped: 2.7k)
-import './DescripcionBox.css'
-const DescripcionBox = () => {
+import React from 'react'
+import './DescriptionBox.css'
+const DescriptionBox = () => {
     return (
         <div className='descriptionbox'>
-         <div className="descripcionbox-navigator">
-             <div className="descripcionbox-nav-box">Descripción</div>  
-             <div className="descripcionbox-nav-box-fade">Reseñas(122)</div>
-             <div className="descripcionbox"></div>
+         <div className="descriptionbox-navigator">
+             <div className="descriptionbox-nav-box">Descripción</div>  
+             <div className="descriptionbox-nav-box-fade">Reseñas(122)</div>
+             <div className="descriptionbox"></div>
              </div>
              <div className="descriptionbox-description">
              <p>Un sitio web de comercio electrónico es una plataforma en línea que facilita la compra y
@@ -21,4 +21,4 @@ const DescripcionBox = () => {
         </div>           
     )
 }
-export default DescripcionBox
+export default DescriptionBox

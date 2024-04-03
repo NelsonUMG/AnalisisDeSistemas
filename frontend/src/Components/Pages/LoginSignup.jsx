@@ -1,4 +1,4 @@
-import React from 'React' 6.9k (gzipped: 2.7k)
+import React from 'react' 
 import './CSS/LoginSignup.css'
 const LoginSignup = () => {
     return (
