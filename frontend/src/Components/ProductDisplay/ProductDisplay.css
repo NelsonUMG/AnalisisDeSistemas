@@ -201,3 +201,63 @@
         font-size: 16px;
     }
 }
+/* Estilos específicos para el botón "ADD TO CART" */
+.productdisplay-right button {
+    width: 200px; /* Aumentar el ancho del botón */
+    padding: 15px 0; /* Ajustar el padding para que el botón sea más grande */
+    margin-bottom: 20px;
+    background-color: orange; /* Color de fondo naranja */
+    color: white; /* Texto blanco */
+    font-size: 18px; /* Tamaño de fuente */
+    border: none; /* Quitar borde */
+    border-radius: 8px; /* Agregar bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Efecto de transición suave */
+}
+
+.productdisplay-right button:hover {
+    background-color: #ff7f00; /* Cambiar color de fondo al pasar el mouse */
+}
+
+/* Efecto al hacer clic en el botón "ADD TO CART" */
+.productdisplay-right button:active {
+    transform: translateY(1px); /* Mover el botón hacia abajo al hacer clic */
+}
+
+/* Estilos para la lista de tallas */
+.productdisplay-right-size {
+    margin-top: 20px;
+    margin-bottom: 20px; /* Agregar espacio debajo de las tallas */
+}
+
+.size-options {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.size-options li {
+    display: inline-block;
+    margin-right: 20px; /* Aumentar el espacio entre las tallas */
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease;
+}
+
+.size-options li:hover {
+    background-color: #f0f0f0;
+}
+
+.size-options li.selected {
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+
+/* Efecto al hacer clic en las tallas */
+.size-options li:active {
+    transform: translateY(1px);
+}
