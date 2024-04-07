@@ -1,2 +1,14 @@
-6:06:36 - 6:07:05
-6:11:50 - 6:12:05
+import React from 'react'
+import Navbar from './Components/Navbar/Navbar'
+import Admin from './pages/Admin/Admin'
+
+const App =() => {
+    return (
+    <div>
+        <Navbar/>
+        <Admin/>
+    </div>
+    )
+}
+
+export default App
