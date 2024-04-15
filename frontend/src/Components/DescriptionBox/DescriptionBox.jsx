@@ -1,24 +1,32 @@
-import React from 'react'
-import './DescriptionBox.css'
+import React from "react";
+import "./DescriptionBox.css";
+
 const DescriptionBox = () => {
-    return (
-        <div className='descriptionbox'>
-         <div className="descriptionbox-navigator">
-             <div className="descriptionbox-nav-box">Descripción</div>  
-             <div className="descriptionbox-nav-box-fade">Reseñas(122)</div>
-             <div className="descriptionbox"></div>
-             </div>
-             <div className="descriptionbox-description">
-             <p>Un sitio web de comercio electrónico es una plataforma en línea que facilita la compra y
-             venta de productos o servicios a través de Internet. Sirve como un mercado virtual donde las 
-             empresas y los individuos pueden exhibir sus productos, interactuar con los clientes y realizar 
-             transacciones sin la necesidad de una presencia física. Los sitios web de comercio electrónico han
-              ganado una inmensa popularidad debido a su conveniencia, accesibilidad y alcance que ofrecen.Los 
-              sitios web de comercio electrónico suelen mostrar productos o servicios junto con descripciones e 
-              imágenes detalladas. precios. y cualquier variación disponible (por ejemplo, tamaños, colores). Cada 
-              producto suele tener su propia página dedicada con información relevante.</p>
-        </div> 
-        </div>           
-    )
-}
-export default DescriptionBox
+  return (
+    <div className="descriptionbox">
+      <div className="descriptionbox-navigator">
+        <div className="descriptionbox-nav-box">Description</div>
+        <div className="descriptionbox-nav-box fade">Reviews (122)</div>
+      </div>
+      <div className="descriptionbox-description">
+        <p>
+          An e-commerce website is an online platform that facilitates the
+          buying and selling of products or services over the internet. It
+          serves as a virtual marketplace where businesses and individuals can
+          showcase their products, interact with customers, and conduct
+          transactions without the need for a physical presence. E-commerce
+          websites have gained immense popularity due to their convenience,
+          accessibility, and the global reach they offer.
+        </p>
+        <p>
+          E-commerce websites typically display products or services along with
+          detailed descriptions, images, prices, and any available variations
+          (e.g., sizes, colors). Each product usually has its own dedicated page
+          with relevant information.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default DescriptionBox;

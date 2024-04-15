@@ -1,31 +1,32 @@
-import React from 'react'
-import './Hero.css'
-import hand_icon from '../Assets/hand_icon.png'
-import arrow_icon from '../Assets/arrow.png'
-import hero_image from '../Assets/hero_image.png'
-const Hero = () => {
-    return (
-        <div ClassName='hero'>
-            <div ClassName= "hero-left">
-            <h2>SOLO NUEVAS LLEGADAS</h2>
-            <div>
-            <div ClassName="hand-hand-icon">
-                <p>nuevo</p>
-                <img src={hand_icon} alt="" />
-            </div>
-            <p>colecciones</p>
-            <p>Para todos</p>
-            </div>
-            <div ClassName="hero-latest-btn">
-                <div>última colección</div>
-                <img src="" alt="" />
-            </div>
-           </div>
-           <div ClassName="hero-right">
-                <img src={hero_image} alt="" />
-           </div>
-        </div>
-    )
-}
-export default Hero
+import React from "react";
+import "./Hero.css";
+import hero_image from "../Assets/hero_image.png";
+import hand_icon from "../Assets/hand_icon.png";
+import arrow_icon from "../Assets/arrow.png";
 
+const Hero = () => {
+  return (
+    <div className="hero">
+      <div className="hero-left">
+        <h2>NEW ARRIVALS ONLY</h2>
+        <div>
+          <div className="hero-hand-icon">
+            <p>new</p>
+            <img src={hand_icon} alt="" />
+          </div>
+          <p>collections</p>
+          <p>for everyone</p>
+        </div>
+        <div className="hero-latest-btn">
+          <div>Latest Collection</div>
+          <img src={arrow_icon} alt="" />
+        </div>
+      </div>
+      <div className="hero-right">
+        <img src={hero_image} alt="hero" />
+      </div>
+    </div>
+  );
+};
+
+export default Hero;
