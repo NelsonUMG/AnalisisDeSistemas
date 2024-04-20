@@ -1,7 +1,6 @@
 const port = 4000;
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
@@ -10,12 +9,6 @@ const oracledb = require('oracledb');
 
 app.use(express.json());
 app.use(cors());
-
-// Database Connection With MongoDB
-mongoose.connect("mongodb+srv://jawicho:jawicho123@cluster0.htjfwjt.mongodb.net/e-commerce");
-// paste your mongoDB Connection string above with password
-// password should not contain '@' special character
-
 
 // Database Connection With Oracle Express
 const dbConfig = {
@@ -70,64 +63,6 @@ const fetchuser = async (req, res, next) => {
 };
 
 
-// Schema for creating user model
-const Users = mongoose.model("Users", {
-  name: {
-    type: String,
-  },
-  email: {
-    type: String,
-    unique: true,
-  },
-  password: {
-    type: String,
-  },
-  cartData: {
-    type: Object,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-// Schema for creating Product
-const Product = mongoose.model("Product", {
-  id: {
-    type: Number,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  new_price: {
-    type: Number
-  },
-  old_price: {
-    type: Number
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  avilable: {
-    type: Boolean,
-    default: true,
-  },
-});
-
-app.get("/", (req, res) => {
-  res.send("Root");
-});
 
 //Create an endpoint at ip/login for login the user and giving auth-token
 app.post('/login', async (req, res) => {
@@ -156,139 +91,120 @@ app.post('/login', async (req, res) => {
     }
 })
 
-//Create an endpoint at ip/auth for regestring the user in data base & sending token
-app.post('/signup', async (req, res) => {
-  console.log("Sign Up");
-        let success = false;
-        let check = await Users.findOne({ email: req.body.email });
-        if (check) {
-            return res.status(400).json({ success: success, errors: "existing user found with this email" });
-        }
-        let cart = {};
-          for (let i = 0; i < 300; i++) {
-          cart[i] = 0;
-        }
-        const user = new Users({
-            name: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            cartData: cart,
-        });
-        await user.save();
-        const data = {
-            user: {
-                id: user.id
-            }
-        }
-        
-        const token = jwt.sign(data, 'secret_ecom');
-        success = true; 
-        res.json({ success, token })
-    })
 
 app.get("/allproducts", async (req, res) => {
-	let products = await Product.find({});
-  console.log("All Products");
-    res.send(products);
+
 });
 
 app.get("/newcollections", async (req, res) => {
-	let products = await Product.find({});
-  let arr = products.slice(1).slice(-8);
-  console.log("New Collections");
-  res.send(arr);
+
+
 });
 
 app.get("/popularinwomen", async (req, res) => {
-	let products = await Product.find({});
-  let arr = products.splice(0,  4);
-  console.log("Popular In Women");
-  res.send(arr);
+
 });
 
 //Create an endpoint for saving the product in cart
 app.post('/addtocart', fetchuser, async (req, res) => {
-	console.log("Add Cart");
-    let userData = await Users.findOne({_id:req.user.id});
-    userData.cartData[req.body.itemId] += 1;
-    await Users.findOneAndUpdate({_id:req.user.id}, {cartData:userData.cartData});
-    res.send("Added")
+
   })
 
   //Create an endpoint for saving the product in cart
 app.post('/removefromcart', fetchuser, async (req, res) => {
-	console.log("Remove Cart");
-    let userData = await Users.findOne({_id:req.user.id});
-    if(userData.cartData[req.body.itemId]!=0)
-    {
-      userData.cartData[req.body.itemId] -= 1;
-    }
-    await Users.findOneAndUpdate({_id:req.user.id}, {cartData:userData.cartData});
-    res.send("Removed");
+
   })
 
   //Create an endpoint for saving the product in cart
 app.post('/getcart', fetchuser, async (req, res) => {
-  console.log("Get Cart");
-  let userData = await Users.findOne({_id:req.user.id});
-  res.json(userData.cartData);
+
 
   })
 
 
-  app.post("/addproduct", async (req, res) => {
-    let products = await Product.find({});
-    let id;
-    if (products.length > 0) {
-      let last_product_array = products.slice(-1);
-      let last_product = last_product_array[0];
-      id = last_product.id + 1;
-    } else {
-      id = 1;
-    }
-  
-    // Almacena los datos en variables
+  app.post('/addproduct', async (req, res) => {
     const newProductData = {
-      id: id,
-      name: req.body.name,
-      image: req.body.image,
-      category: req.body.category,
-      new_price: req.body.new_price,
-      old_price: req.body.old_price,
+      id_categoria: req.body.id_categoria,
+      nombre_producto: req.body.nombre_producto,
+      descripcion_producto: req.body.descripcion_producto,
+      imagen_producto1: req.body.imagen_producto1,
+      imagen_producto2: req.body.imagen_producto2,
+      imagen_producto3: req.body.imagen_producto3,
+      estado: req.body.estado,
     };
-    const query = `INSERT INTO products (id, name, image, category, new_price, old_price) VALUES (:id, :name, :image, :category, :new_price, :old_price)`;
-  const binds = newProductData;
-  
-  // Ejecuta la consulta
-  oracledb.getConnection(async (err, connection) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
     
-    try {
-      const result = await connection.execute(query, binds, { autoCommit: true });
-      console.log("Inserted:", result.rowsAffected);
-      res.json({ success: true, name: req.body.name });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ success: false, error: "Error al insertar el producto en Oracle Express" });
-    } finally {
-      if (connection) {
-        try {
-          await connection.close();
-        } catch (err) {
-          console.error(err.message);
+    // Insertar en Oracle
+    const queryProducto = `INSERT INTO PRODUCTO (id_categoria, nombre_producto, descripcion_producto, imagen_producto1, imagen_producto2, imagen_producto3, estado) VALUES (:id_categoria, :nombre_producto, :descripcion_producto, :imagen_producto1, :imagen_producto2, :imagen_producto3, :estado) RETURNING id INTO :id`;
+    const bindsProducto = {
+      id_categoria: newProductData.id_categoria,
+      nombre_producto: newProductData.nombre_producto,
+      descripcion_producto: newProductData.descripcion_producto,
+      imagen_producto1: newProductData.imagen_producto1,
+      imagen_producto2: newProductData.imagen_producto2,
+      imagen_producto3: newProductData.imagen_producto3,
+      estado: newProductData.estado,
+      id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER }
+    };
+  
+    oracledb.getConnection(async (err, connection) => {
+      try {
+        let result = await connection.execute(queryProducto, bindsProducto, { autoCommit: true });
+        const newProductId = result.outBinds.id[0]; // Obtener el ID generado
+        
+        // Insertar en ITEM_PRODUCTO
+        const newItemData = {
+          id_producto: newProductId,
+          cantidad_disp: req.body.cantidad,
+          precio: Number(parseFloat(req.body.precio).toFixed(2)),
+          estado: req.body.estado,
+        };
+        
+        
+        const queryItem = `INSERT INTO ITEM_PRODUCTO (id_producto, cantidad_disp, precio, estado) VALUES (:id_producto, :cantidad_disp, :precio, :estado) RETURNING id INTO :id`;
+        const bindsItem = {
+          id_producto: newItemData.id_producto,
+          cantidad_disp: newItemData.cantidad_disp,
+          precio: newItemData.precio,
+          estado: newItemData.estado,
+          id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER }
+        };
+
+        let itemId;
+        
+        result = await connection.execute(queryItem, bindsItem, { autoCommit: true });
+        itemId = result.outBinds.id[0];
+
+        const newConfigData = {
+          id_item_producto: itemId,
+          id_opcion_variacion: req.body.id_opcion_variacion
+        };
+
+        const queryConfig = `INSERT INTO CONFIGURACION_PRODUCTO (id_item_producto, id_opcion_variacion) VALUES (:id_item_producto, :id_opcion_variacion)`;
+        const bindsConfig = newConfigData;
+
+        result = await connection.execute(queryConfig, bindsConfig, { autoCommit: true });
+        console.log("Inserted into CONFIGURACION_PRODUCTO:", result.rowsAffected);
+
+        console.log("Inserted into Oracle:", result.rowsAffected);
+        res.json({ success: true, name: req.body.nombre_producto });
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ success: false, error: "Error al insertar el producto en Oracle Express" });
+      } finally {
+        if (connection) {
+          try {
+            await connection.close();
+          } catch (err) {
+            console.error(err.message);
+          }
         }
       }
-    }
-  });
+    });
 });
 
+
 app.post("/removeproduct", async (req, res) => {
-  const product = await Product.findOneAndDelete({ id: req.body.id });
-  console.log("Removed");
-  res.json({success:true,name:req.body.name})
+
 });
 
 app.listen(port, (error) => {
