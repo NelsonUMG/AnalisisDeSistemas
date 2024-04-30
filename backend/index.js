@@ -13,7 +13,7 @@ app.use(cors());
 // Database Connection With Oracle Express
 const dbConfig = {
   user: 'SYSTEM',
-  password: 'jawicho123',
+  password: '123',
   connectString: 'localhost:1521/xe'
 };
 
@@ -95,24 +95,24 @@ app.post('/login', async (req, res) => {
 app.get("/allproducts", async (req, res) => {
 
 });
-
+// No usar
 app.get("/newcollections", async (req, res) => {
 
 
 });
-
+// No Usar
 app.get("/popularinwomen", async (req, res) => {
 
 });
-
+// DESPUÉS
 //Create an endpoint for saving the product in cart
 app.post('/addtocart', fetchuser, async (req, res) => {
 
   })
-
+//DESPUES
   //Create an endpoint for saving the product in cart
 app.post('/removefromcart', fetchuser, async (req, res) => {
-
+//DESPUES
   })
 
   //Create an endpoint for saving the product in cart
@@ -204,8 +204,48 @@ app.post('/getcart', fetchuser, async (req, res) => {
 
 
 app.post("/removeproduct", async (req, res) => {
+  const productIdToRemove = req.body.product_id; // Se espera que el cliente envíe el ID del producto a eliminar
+  
+  const queryUpdateItemConfigState = `UPDATE CONFIGURACION_PRODUCTO SET estado = 3 WHERE id_item_producto IN (SELECT id FROM ITEM_PRODUCTO WHERE id_producto = :product_id)`;
+  const queryUpdateItemState = `UPDATE ITEM_PRODUCTO SET estado = 3 WHERE id_producto = :product_id`;
+  const queryUpdateProductState = `UPDATE PRODUCTO SET estado = 3 WHERE id = :product_id`;
 
+  const bindsUpdateState = {
+    product_id: productIdToRemove
+  };
+
+  oracledb.getConnection(async (err, connection) => {
+    try {
+      // Actualizar estado en CONFIGURACION_PRODUCTO
+      let result = await connection.execute(queryUpdateItemConfigState, bindsUpdateState, { autoCommit: true });
+      console.log("Updated CONFIGURACION_PRODUCTO state:", result.rowsAffected);
+
+      // Actualizar estado en ITEM_PRODUCTO
+      result = await connection.execute(queryUpdateItemState, bindsUpdateState, { autoCommit: true });
+      console.log("Updated ITEM_PRODUCTO state:", result.rowsAffected);
+
+      // Actualizar estado en PRODUCTO
+      result = await connection.execute(queryUpdateProductState, bindsUpdateState, { autoCommit: true });
+      console.log("Updated PRODUCTO state:", result.rowsAffected);
+
+      res.json({ success: true, message: "Producto eliminado correctamente" });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ success: false, error: "Error al eliminar el producto en Oracle Express" });
+    } finally {
+      if (connection) {
+        try {
+          await connection.close();
+        } catch (err) {
+          console.error(err.message);
+        }
+      }
+    }
+  });
 });
+
+
+
 
 app.listen(port, (error) => {
   if (!error) console.log("Server Running on port " + port);
