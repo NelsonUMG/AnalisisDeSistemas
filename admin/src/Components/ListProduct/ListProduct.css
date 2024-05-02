@@ -31,6 +31,10 @@
   cursor: pointer;
   margin: auto;
 }
+.listproduct-edit-icon{
+  cursor: pointer;
+  margin: auto;
+}
 .listproduct-allproducts{
     overflow-y: auto;
 }
